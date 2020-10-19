@@ -70,7 +70,7 @@ public class Magpie2
 	{
 		final int NUMBER_OF_RESPONSES = 7;
 		double r = Math.random();
-		int whichResponse = (int)(r * NUMBER_OF_RESPONSES);
+		int whichResponse = (int) (r * NUMBER_OF_RESPONSES);
 		String response = "";
 		
 		if (whichResponse == 0)
