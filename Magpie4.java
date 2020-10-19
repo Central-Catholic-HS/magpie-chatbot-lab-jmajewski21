@@ -53,6 +53,14 @@ public class Magpie4
 		{
 			response = transformIWantToStatement(statement);
 		}
+		else if (findKeyword(statement, "I want", 0) >= 0) {
+			response = transformIWantStatement(statement);
+		}
+		
+		else if (findKeyword(statement, "I") >= 0 && findKeyword(statement, "you") >= 0)
+		{
+			response = transformISomethingStatement(statement);
+		}
 
 		else
 		{
@@ -95,7 +103,40 @@ public class Magpie4
 		return "What would it mean to " + restOfStatement + "?";
 	}
 
+	private String transformIWantStatement(String statement)
+	{
+		statement = statement.trim();
+		String lastChar = statement.substring(statement.length() - 1);
+		if (lastChar.equals("."))
+		{
+			statement = statement.substring(0, statement
+					.length() - 1);
+		}
+		int psn = findKeyword (statement, "I want", 0);
+		String restOfStatement = statement.substring(psn + 7).trim();
+		return "Would you really be happy if you had " + restOfStatement + "?";
+	}
 	
+	private String transformISomethingStatement(String statement)
+	{
+		//  Remove the final period, if there is one
+		statement = statement.trim();
+		String lastChar = statement.substring(statement
+				.length() - 1);
+		if (lastChar.equals("."))
+		{
+			statement = statement.substring(0, statement
+					.length() - 1);
+		}
+		
+		int psnOfI = findKeyword (statement, "I", 0);
+		int psnOfYou = findKeyword (statement, "you", psnOfI + 3);
+		
+		String restOfStatement = statement.substring(psnOfI + 2, psnOfYou).trim();
+		return "Why do you " + restOfStatement + " me?";
+
+		//return "AAAAA";
+	}
 	
 	/**
 	 * Take a statement with "you <something> me" and transform it into 
